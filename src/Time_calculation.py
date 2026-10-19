@@ -17,7 +17,19 @@ def placeholder():
     print(f"{work_end_hours} - {work_start_hours}")
     print(f"{work_end_minutes} - {work_start_minutes}")
 
-    work_Time_Result = work_end_hours - work_start_hours 
+    start_total_minutes = work_start_hours * 60 + work_start_minutes
+    end_total_minutes = work_end_hours * 60 + work_end_minutes
 
+    work_Time_Result = end_total_minutes - start_total_minutes - PAUSENZEIT
 
-    print(work_Time_Result)
+    result_hours = work_Time_Result // 60
+    result_minutes = work_Time_Result % 60
+
+    print(f"Resultat: {result_hours} Stunden und {result_minutes} Minuten")
+
+    if result_hours == 8 and result_minutes != 0:
+        print(f"Du hast {result_minutes} Minuten Überzeit")
+
+    elif result_hours <= 8:
+        negative_time = 60 - result_minutes
+        print(f"Du hast {result_minutes} Minusminuten")
