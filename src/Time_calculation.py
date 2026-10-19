@@ -27,9 +27,6 @@ def placeholder():
 
     print(f"Resultat: {result_hours} Stunden und {result_minutes} Minuten")
 
-    if result_hours == 8 and result_minutes != 0:
-        print(f"Du hast {result_minutes} Minuten Überzeit")
+    overtime = -(480 - work_Time_Result) 
 
-    elif result_hours <= 8:
-        negative_time = 60 - result_minutes
-        print(f"Du hast {result_minutes} Minusminuten")
+    print(f"Deine Zeit: {overtime}")
