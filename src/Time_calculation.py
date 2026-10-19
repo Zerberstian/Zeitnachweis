@@ -15,6 +15,7 @@ def placeholder():
     work_end_minutes = int(work_end[1])
 
     print(f"{work_end_hours} - {work_start_hours}")
+    print(f"{work_end_minutes} - {work_start_minutes}")
 
     work_Time_Result = work_end_hours - work_start_hours 
 
