@@ -25,8 +25,13 @@ def placeholder():
     result_hours = work_Time_Result // 60
     result_minutes = work_Time_Result % 60
 
-    print(f"Resultat: {result_hours} Stunden und {result_minutes} Minuten")
+
+    #print(f"Resultat: {result_hours} Stunden und {result_minutes} Minuten")
 
     overtime = -(480 - work_Time_Result) 
 
-    print(f"Deine Zeit: {overtime}")
+
+    #print(f"Deine Zeit: {overtime}")
+
+
+    return overtime, result_hours, result_minutes

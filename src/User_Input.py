@@ -8,11 +8,3 @@ def end_time_request():
 
     return  WorkTimeEnd
 
-
-'''
-print(f"Deine Arbeitszeit beginnt um:   {WorkTimeStart}")
-print(f"Deine Arbeitszeit endet um:   {WorkTimeEnd}")
-
-print(type(WorkTimeStart))
-print(type(WorkTimeEnd))
-'''
