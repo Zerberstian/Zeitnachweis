@@ -1,6 +1,6 @@
-from Time_calculation import placeholder
+from Time_calculation import calculating
 from output import outputing
 
 if __name__ == "__main__":
-    result = placeholder()
+    result = calculating()
     outputing(result)
