@@ -1,5 +1,11 @@
 import re
 
+def name_request():
+    Name = input("Bitte gib deinen Nachnamen ein\n")
+    Name2 = input("Bitte gib deinen Namen ein\n")
+
+    return Name, Name2
+
 def start_time_request():
 
     WorkTimeStart = ""
@@ -31,4 +37,4 @@ def end_time_request():
 
         else:
             print("Value Error: Bitte gib eine gültige Uhrzeit ein.")
-        
+

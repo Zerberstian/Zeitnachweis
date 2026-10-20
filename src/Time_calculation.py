@@ -7,8 +7,11 @@ def calculating():
     correction = "j"
     while correction == "j":
 
-        work_start = start_time_request().split(":")
-        work_end = end_time_request().split(":")
+        work_start_input = start_time_request()#.split(":")
+        work_end_input = end_time_request()#.split(":")
+
+        work_start = work_start_input.split(":")
+        work_end = work_end_input.split(":")
         
         work_start_hours = int(work_start[0])
         work_start_minutes = int(work_start[1])
@@ -35,6 +38,7 @@ def calculating():
                 '''
 
                 if correction == "n":
+                    # Placeholder for GUI to exiting to main menu
                     print("Programm schließt...")
                     sys.exit(0)
                 
@@ -48,4 +52,4 @@ def calculating():
             
     overtime = -(480 - work_Time_Result) 
 
-    return overtime, result_hours, result_minutes
+    return overtime, result_hours, result_minutes, work_start_input, work_end_input
