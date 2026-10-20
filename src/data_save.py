@@ -8,7 +8,7 @@ with open("Zeitnachweise.json", "r", encoding="utf-8") as f:
 
 
 
-def dump(write):
+def dump_data_to_json(write):
     with open("Json/Zeitnachweise.json", "w", encoding="utf-8") as f:
         json.dump(write, f, indent=4, ensure_ascii=False)
 
@@ -42,6 +42,6 @@ def saving(result, names):
     
     print(json.dumps(dictionary_data, indent=4, ensure_ascii=False, default=str))
 
-    x = dictionary_data
-    dump(x)
+    to_dump_data = dictionary_data
+    dump_data_to_json(write=to_dump_data)
    
