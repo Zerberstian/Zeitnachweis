@@ -1,13 +1,13 @@
 import json
 import datetime
 
-x = datetime.date.today()
+importet_date = datetime.date.today()
 
 def saving(result, names):
     overtime, result_hours, result_minutes, work_start, work_end = result
     family_name_input, name_input = names
 
-    data = dict(
+    dictionary_data = dict(
         familyname = "",
         name = "",
         date = "",
@@ -18,10 +18,10 @@ def saving(result, names):
         over_time = ""
     )
 
-    data.update({
+    dictionary_data.update({
         "familyname": family_name_input,
         "name": name_input,
-        "date": x,
+        "date": importet_date,
         "start_time": work_start,
         "end_time": work_end,
         "hours_worked": result_hours,
@@ -29,5 +29,5 @@ def saving(result, names):
         "over_time": overtime,
     })
     
-    print(json.dumps(data, indent=4, ensure_ascii=False, default=str))
+    print(json.dumps(dictionary_data, indent=4, ensure_ascii=False, default=str))
    
