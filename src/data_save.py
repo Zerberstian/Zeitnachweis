@@ -6,6 +6,8 @@ with open("Zeitnachweise.json", "r", encoding="utf-8") as f:
     Zeitnachweise = json.load(f)
 '''
 
+
+
 def dump(write):
     with open("Json/Zeitnachweise.json", "w", encoding="utf-8") as f:
         json.dump(write, f, indent=4, ensure_ascii=False)
@@ -33,7 +35,7 @@ def saving(result, names):
         "date": importet_date,
         "start_time": work_start,
         "end_time": work_end,
-        "hours_worked": result_hours,
+        "houers_worked": result_hours,
         "minutes_worked": result_minutes,
         "over_time": overtime,
     })
