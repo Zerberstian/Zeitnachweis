@@ -19,8 +19,8 @@ def calculating():
 
     work_Time_Result = end_total_minutes - start_total_minutes - PAUSENZEIT
 
-    if work_Time_Result < 0:
-        print(f"Fehler: Du hast weniger als Pausenzeit ({PAUSENZEIT}) Minuten gearbeitet")
+    if work_Time_Result <= 0:
+        print(f"Fehler: Du hast weniger als die Pausenzeit ({PAUSENZEIT} Minuten) gearbeitet")
 
         while True:
             correction = input(f"Möchtest du nochmal korrigieren? (j/n)\n").strip().lower()
