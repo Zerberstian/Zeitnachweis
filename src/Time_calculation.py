@@ -36,7 +36,7 @@ def calculating():
 
                 if correction == "n":
                     print("Programm schließt...")
-                    sys.exit(1)
+                    sys.exit(0)
                 
                 elif correction != "j":
                     print("Fehler bei der Eingabe - bitte j oder n eingeben")
@@ -45,7 +45,6 @@ def calculating():
         
     result_hours = work_Time_Result // 60
     result_minutes = work_Time_Result % 60
-    print(f"Resultat: {result_hours} Stunden und {result_minutes} Minuten")
             
     overtime = -(480 - work_Time_Result) 
 
