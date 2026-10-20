@@ -26,7 +26,7 @@ def initialize_gui():
 
     if sys.platform.startswith("linux"):
         root.attributes("-zoomed", True)
-        
+
     elif sys.platform == "win32":
         root.state("zoomed")
 
@@ -36,13 +36,29 @@ def initialize_gui():
     root.grid_columnconfigure(1, weight=3)
 
     # Frames
-    navigation_frame = tk.Frame(root, bg=ACCENTS)
+    navigation_frame = tk.Frame(
+        root,
+        bg=ACCENTS,
+        highlightbackground=BORDERS,
+        highlightcolor=BORDERS,
+        highlightthickness=5
+    )
     navigation_frame.grid(row=0, column=0, sticky="nsew")
 
-    context_frame_1 = tk.Frame(root, bg=BACKGROUND)
+    context_frame_1 = tk.Frame(root,
+        bg=BACKGROUND,
+        highlightbackground=BORDERS,
+        highlightcolor=BORDERS,
+        highlightthickness=5
+    )
     context_frame_1.grid(row=0, column=1, sticky="nsew")
 
-    context_frame_2 = tk.Frame(root, bg=BACKGROUND)
+    context_frame_2 = tk.Frame(root,
+        bg=BACKGROUND,
+        highlightbackground=BORDERS,
+        highlightcolor=BORDERS,
+        highlightthickness=5
+    )
 
     Start_Button = tk.Button(navigation_frame,
                             text="Start",
