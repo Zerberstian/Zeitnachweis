@@ -1,4 +1,5 @@
 import tkinter as tk
+import sys
 
 # using Entry() to get user input
 BACKGROUND = "#F3F5F7"
@@ -10,7 +11,7 @@ PRIMARYBUTTONS = "#1F3A5F"
 PRIMARYBUTTONTEXT = "#FFFFFF"
 #Akzent / Zweitbutton = "#0F766E"
 #Akzent-Text          = "#FFFFFF"
-#Akzent-Fläche        = "#D9F2EE"
+ACCENTS = "#D9F2EE"
 SUCCESS = "#166534"
 WARNINGCOLOR = "#92400E"
 ERRORSCOLOR = "#B42318"
@@ -23,24 +24,32 @@ def initialize_gui():
 
     root= tk.Tk()
 
-    root.state('zoomed') 
+    if sys.platform.startswith("linux"):
+        root.attributes("-zoomed", True)
+        
+    elif sys.platform == "win32":
+        root.state("zoomed")
+
     root.config(bg="Black")
     root.grid_rowconfigure(0, weight=1)
     root.grid_columnconfigure(0, weight=1)
     root.grid_columnconfigure(1, weight=3)
 
-    Menu_Frame = tk.Frame(root, bg=BACKGROUND)
-    Menu_Frame.grid(row=0, column=1, sticky="nsew")
+    # Frames
+    navigation_frame = tk.Frame(root, bg=ACCENTS)
+    navigation_frame.grid(row=0, column=0, sticky="nsew")
 
-    Main_Frame = tk.Frame(root, bg=BACKGROUND)
-    #Menu_Frame.grid(row=0, column=0, sticky="nsew")
+    context_frame_1 = tk.Frame(root, bg=BACKGROUND)
+    context_frame_1.grid(row=0, column=1, sticky="nsew")
 
-    Start_Button = tk.Button(Menu_Frame,
+    context_frame_2 = tk.Frame(root, bg=BACKGROUND)
+
+    Start_Button = tk.Button(navigation_frame,
                             text="Start",
                             font=('Arial', 12, 'bold'),
                             bg=PRIMARYBUTTONS,
                             fg=PRIMARYBUTTONTEXT,
-                            command=lambda: swap_fames(to_swap=Menu_Frame, swap_with=Main_Frame))
+                            command=lambda: swap_fames(to_swap=context_frame_1, swap_with=context_frame_2))
     Start_Button.pack()
 
     root.mainloop()
