@@ -17,19 +17,20 @@ ERRORSCOLOR = "#B42318"
 
 def swap_fames(to_swap, swap_with):
     to_swap.grid_forget()
-    swap_with.grid(row=0, column=0, sticky="nsew")
+    swap_with.grid(row=0, column=1, sticky="nsew")
 
 def initialize_gui():
 
     root= tk.Tk()
 
     root.state('zoomed') 
-
+    root.config(bg="Black")
     root.grid_rowconfigure(0, weight=1)
     root.grid_columnconfigure(0, weight=1)
+    root.grid_columnconfigure(1, weight=3)
 
     Menu_Frame = tk.Frame(root, bg=BACKGROUND)
-    Menu_Frame.grid(row=0, column=0, sticky="nsew")
+    Menu_Frame.grid(row=0, column=1, sticky="nsew")
 
     Main_Frame = tk.Frame(root, bg=BACKGROUND)
     #Menu_Frame.grid(row=0, column=0, sticky="nsew")
