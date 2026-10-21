@@ -1,33 +1,25 @@
 import re
 
+LETTERS_AND_SEPARATORS = re.compile(r"[^\W\d_]+(?:[-'’][^\W\d_]+)*")
+
+# Name Inputs
+def request_name(prompt):
+    while True:
+        name = input(prompt).strip()
+
+        if len(name) > 20:
+            print("Der Name ist zu lang (maximal 20 Zeichen).")
+        elif not LETTERS_AND_SEPARATORS.fullmatch(name):
+            print("Bitte gib nur Buchstaben ein.")
+        else:
+            return name
+
 def name_request():
-    Familyname = Request_family_name()
-    FirstName = Request_first_name()
+    family_name = request_name("Bitte gib deinen Nachnamen ein:\n")
+    first_name = request_name("Bitte gib deinen Vornamen ein:\n")
+    return family_name, first_name
 
-    return Familyname, FirstName
-
-def Request_family_name():
-    loop = True
-    while loop == True:
-        Familyname = input("Bitte gib deinen Nachnamen ein\n")
-        if len(Familyname) <= 20:
-            loop = False
-            return Familyname
-        
-        else:
-            print("Der angegebener Name ist zu lang.")
-
-def Request_first_name():
-    loop = True
-    while loop == True:
-        Firstname = input("Bitte gib deinen Vornamen ein\n")
-        if len(Firstname) <= 20:
-            loop = False
-            return Firstname
-        
-        else:
-            print("Der angegebener Name ist zu lang.")
-
+# Time Inputs
 def time_request():
     start_time = start_time_request()
     end_time = end_time_request()
@@ -66,4 +58,3 @@ def end_time_request():
         else:
             print("Value Error: Bitte gib eine gültige Uhrzeit ein.")
 
-name_request()
