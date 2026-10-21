@@ -3,12 +3,13 @@ import sys
 
 PAUSENZEIT = 45
 
-def calculating():
+def calculating(time_inputs):
+    a, b = time_inputs
     correction = "j"
     while correction == "j":
 
-        work_start_input = start_time_request()
-        work_end_input = end_time_request()
+        work_start_input = a
+        work_end_input = b
 
         work_start = work_start_input.split(":")
         work_end = work_end_input.split(":")

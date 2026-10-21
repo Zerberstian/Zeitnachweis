@@ -1,10 +1,38 @@
 import re
 
 def name_request():
-    Name = input("Bitte gib deinen Nachnamen ein\n")
-    Name2 = input("Bitte gib deinen Namen ein\n")
+    Familyname = Request_family_name()
+    FirstName = Request_first_name()
 
-    return Name, Name2
+    return Familyname, FirstName
+
+def Request_family_name():
+    loop = True
+    while loop == True:
+        Familyname = input("Bitte gib deinen Nachnamen ein\n")
+        if len(Familyname) <= 20:
+            loop = False
+            return Familyname
+        
+        else:
+            print("Der angegebener Name ist zu lang.")
+
+def Request_first_name():
+    loop = True
+    while loop == True:
+        Firstname = input("Bitte gib deinen Vornamen ein\n")
+        if len(Firstname) <= 20:
+            loop = False
+            return Firstname
+        
+        else:
+            print("Der angegebener Name ist zu lang.")
+
+def time_request():
+    start_time = start_time_request()
+    end_time = end_time_request()
+
+    return start_time, end_time
 
 def start_time_request():
 
@@ -38,3 +66,4 @@ def end_time_request():
         else:
             print("Value Error: Bitte gib eine gültige Uhrzeit ein.")
 
+name_request()
