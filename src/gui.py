@@ -24,7 +24,7 @@ SUCCESS = "#166534"
 WARNINGCOLOR = "#92400E"
 ERRORSCOLOR = "#B42318"
 
-BORDERWIDTH = 2
+
 # Fonts
 FONTFAMILY = "Arial"
 FONTSICE = 12
@@ -88,6 +88,13 @@ def initialize_gui():
         highlightcolor=BORDERS,
         highlightthickness=BORDERWIDTH)
 
+
+    context_frame_4 = tk.Frame(root,
+        bg="Yellow",
+        highlightbackground=BORDERS,
+        highlightcolor=BORDERS,
+        highlightthickness=BORDERWIDTH)
+    
     active_frame = context_frame_1
 
     def swap_frames(swap_with):
@@ -127,11 +134,11 @@ def initialize_gui():
     Context_3_Button.grid(row=3, column=1, sticky="nsew")  
 
     Context_4_Button = tk.Button(navigation_frame,
-                        text="Button 3",
+                        text="Button 4",
                         font=('Arial', 12, 'bold'),
                         bg=PRIMARYBUTTONS,
                         fg=PRIMARYBUTTONTEXT,
-                        command=lambda: swap_frames(context_frame_3))
+                        command=lambda: swap_frames(context_frame_4))
     Context_4_Button.grid(row=4, column=1, sticky="nsew")  
     
     root.mainloop()

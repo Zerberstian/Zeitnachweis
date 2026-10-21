@@ -16,3 +16,5 @@ arbeitszeit-rechner/
 └── README
 
 ```
+
+# Class Widget with create Methode
