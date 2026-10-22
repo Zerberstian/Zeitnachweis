@@ -58,20 +58,21 @@ def initialize_gui():
         highlightthickness=BORDERWIDTH
     )
     navigation_frame.grid(row=0, column=0, sticky="nsew")
-
+    y = 1
+    x = 1
     navigation_frame.grid_columnconfigure(0, weight=1)
     navigation_frame.grid_columnconfigure(1, weight=2)
-    navigation_frame.grid_rowconfigure(0, weight=1)
-    navigation_frame.grid_rowconfigure(1, weight=1)
-    navigation_frame.grid_rowconfigure(2, weight=1)    
-    navigation_frame.grid_rowconfigure(3, weight=1) 
-    navigation_frame.grid_rowconfigure(4, weight=1)
-    navigation_frame.grid_rowconfigure(5, weight=1)
-    navigation_frame.grid_rowconfigure(6, weight=1)
-    navigation_frame.grid_rowconfigure(7, weight=1)
-    navigation_frame.grid_rowconfigure(8, weight=1)
-    navigation_frame.grid_rowconfigure(9, weight=1)
-    navigation_frame.grid_rowconfigure(10, weight=4)
+    navigation_frame.grid_rowconfigure(0, weight=y)
+    navigation_frame.grid_rowconfigure(1, weight=x)
+    navigation_frame.grid_rowconfigure(2, weight=y)    
+    navigation_frame.grid_rowconfigure(3, weight=x) 
+    navigation_frame.grid_rowconfigure(4, weight=y)
+    navigation_frame.grid_rowconfigure(5, weight=x)
+    navigation_frame.grid_rowconfigure(6, weight=y)
+    navigation_frame.grid_rowconfigure(7, weight=x)
+    navigation_frame.grid_rowconfigure(8, weight=y)
+    navigation_frame.grid_rowconfigure(9, weight=x)
+    navigation_frame.grid_rowconfigure(10, weight=20)
 
 
     context_frame_1 = tk.Frame(root,
@@ -130,13 +131,14 @@ def initialize_gui():
         background=PRIMARYBUTTONS,
         padding=(12, 8),
     )
+
     style.map(
         "App.TButton",
         background=[("pressed", "#162B46"),("active", "#2B527F"),],)
     
     settings_button = AppButton(
         navigation_frame,
-        text="⏣",
+        text="≡",
         command=lambda: swap_frames(settings_frame),)
     settings_button.grid(row=0, column=0, sticky="nw")
 
