@@ -1,5 +1,6 @@
 import tkinter as tk
 import sys
+from widgets_class import AppButton
 
 # using Entry() to get user input
 
@@ -56,14 +57,19 @@ def initialize_gui():
     )
     navigation_frame.grid(row=0, column=0, sticky="nsew")
 
-    navigation_frame.grid_columnconfigure(0, weight=2)
+    navigation_frame.grid_columnconfigure(0, weight=1)
     navigation_frame.grid_columnconfigure(1, weight=1)
     navigation_frame.grid_rowconfigure(0, weight=1)
     navigation_frame.grid_rowconfigure(1, weight=1)
     navigation_frame.grid_rowconfigure(2, weight=1)    
     navigation_frame.grid_rowconfigure(3, weight=1) 
     navigation_frame.grid_rowconfigure(4, weight=1)
-    navigation_frame.grid_rowconfigure(5, weight=4)
+    navigation_frame.grid_rowconfigure(5, weight=1)
+    navigation_frame.grid_rowconfigure(6, weight=1)
+    navigation_frame.grid_rowconfigure(7, weight=1)
+    navigation_frame.grid_rowconfigure(8, weight=1)
+    navigation_frame.grid_rowconfigure(9, weight=1)
+    navigation_frame.grid_rowconfigure(10, weight=4)
 
 
     context_frame_1 = tk.Frame(root,
@@ -122,7 +128,7 @@ def initialize_gui():
                         bg=PRIMARYBUTTONS,
                         fg=PRIMARYBUTTONTEXT,
                         command=lambda: swap_frames(context_frame_2))
-    Context_2_Button.grid(row=2, column=1, sticky="nsew") 
+    Context_2_Button.grid(row=3, column=1, sticky="nsew") 
    
 
     Context_3_Button = tk.Button(navigation_frame,
@@ -131,7 +137,7 @@ def initialize_gui():
                         bg=PRIMARYBUTTONS,
                         fg=PRIMARYBUTTONTEXT,
                         command=lambda: swap_frames(context_frame_3))
-    Context_3_Button.grid(row=3, column=1, sticky="nsew")  
+    Context_3_Button.grid(row=5, column=1, sticky="nsew")  
 
     Context_4_Button = tk.Button(navigation_frame,
                         text="Button 4",
@@ -139,7 +145,13 @@ def initialize_gui():
                         bg=PRIMARYBUTTONS,
                         fg=PRIMARYBUTTONTEXT,
                         command=lambda: swap_frames(context_frame_4))
-    Context_4_Button.grid(row=4, column=1, sticky="nsew")  
+    Context_4_Button.grid(row=7, column=1, sticky="nsew")  
+
+    Context_5_Button = AppButton(navigation_frame,
+                                 text="Button 5",
+                                 command=lambda: swap_frames(sys.exit(0)),).grid(row=9,
+                                                                                    column=1,
+                                                                                    sticky="nsew")
     
     root.mainloop()
 
