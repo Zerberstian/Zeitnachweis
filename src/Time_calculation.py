@@ -1,4 +1,4 @@
-from User_Input import start_time_request, end_time_request
+#from User_Input import start_time_request, end_time_request
 import sys
 
 PAUSENZEIT = 45

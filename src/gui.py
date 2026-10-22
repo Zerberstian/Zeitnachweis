@@ -2,6 +2,7 @@ from widgets_class import AppButton
 import tkinter as tk
 from tkinter import ttk
 import sys
+from User_Input import requesting_name
 
 
 # using Entry() to get user input
@@ -169,6 +170,17 @@ def initialize_gui():
                                  text="Aus",
                                  command=lambda:sys.exit(0))
     Exit_Btn.grid(row=9, column=1, sticky="nsew")
+    
+
+    name_label = tk.Label(context_frame_1, text = 'Username', font=MAINFOND)
+    name_label.grid(row=0, column=0)
+
+    name_entry = tk.Entry(context_frame_1, textvariable = "name_var", font=MAINFOND)
+    name_entry.grid(row=0, column=1)
+
+    tk.Button(context_frame_1, text="Butt", command=lambda: requesting_name(name_entry)).grid(row=0, column=2)
+    #Family_Name
+
     
     root.mainloop()
 
