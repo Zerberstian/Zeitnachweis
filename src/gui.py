@@ -1,6 +1,8 @@
-import tkinter as tk
-import sys
 from widgets_class import AppButton
+import tkinter as tk
+from tkinter import ttk
+import sys
+
 
 # using Entry() to get user input
 
@@ -58,7 +60,7 @@ def initialize_gui():
     navigation_frame.grid(row=0, column=0, sticky="nsew")
 
     navigation_frame.grid_columnconfigure(0, weight=1)
-    navigation_frame.grid_columnconfigure(1, weight=1)
+    navigation_frame.grid_columnconfigure(1, weight=2)
     navigation_frame.grid_rowconfigure(0, weight=1)
     navigation_frame.grid_rowconfigure(1, weight=1)
     navigation_frame.grid_rowconfigure(2, weight=1)    
@@ -79,6 +81,11 @@ def initialize_gui():
         highlightthickness=BORDERWIDTH)
     context_frame_1.grid(row=0, column=1, sticky="nsew")
 
+    settings_frame = tk.Frame(root,
+        bg=BACKGROUND,
+        highlightbackground=BORDERS,
+        highlightcolor=BORDERS,
+        highlightthickness=BORDERWIDTH)
 
 
     context_frame_2 = tk.Frame(root,
@@ -111,47 +118,55 @@ def initialize_gui():
 
         active_frame.grid_forget()  
         swap_with.grid(row=0, column=1, sticky="nsew")  
-        active_frame = swap_with 
+        active_frame = swap_with
 
-    Context_1_Button = tk.Button(navigation_frame,
-                        text="Button 1",
-                        font=('Arial', 12, 'bold'),
-                        bg=PRIMARYBUTTONS,
-                        fg=PRIMARYBUTTONTEXT,
-                        command=lambda: swap_frames(context_frame_1))
+
+    style = ttk.Style(root)
+    style.theme_use("clam")
+    style.configure(
+        "App.TButton",
+        font=MAINFOND,
+        foreground=PRIMARYBUTTONTEXT,
+        background=PRIMARYBUTTONS,
+        padding=(12, 8),
+    )
+    style.map(
+        "App.TButton",
+        background=[("pressed", "#162B46"),("active", "#2B527F"),],)
+    
+    settings_button = AppButton(
+        navigation_frame,
+        text="⏣",
+        command=lambda: swap_frames(settings_frame),)
+    settings_button.grid(row=0, column=0, sticky="nw")
+
+
+    Context_1_Button = AppButton(navigation_frame,
+                                 text="Button 1",
+                                 command=lambda: swap_frames(context_frame_1))
     Context_1_Button.grid(row=1, column=1, sticky="nsew")
 
 
-    Context_2_Button = tk.Button(navigation_frame,
-                        text="Button 2",
-                        font=('Arial', 12, 'bold'),
-                        bg=PRIMARYBUTTONS,
-                        fg=PRIMARYBUTTONTEXT,
-                        command=lambda: swap_frames(context_frame_2))
+    Context_2_Button = AppButton(navigation_frame,
+                                 text="Button 2",
+                                 command=lambda: swap_frames(context_frame_2))
     Context_2_Button.grid(row=3, column=1, sticky="nsew") 
    
 
-    Context_3_Button = tk.Button(navigation_frame,
-                        text="Button 3",
-                        font=('Arial', 12, 'bold'),
-                        bg=PRIMARYBUTTONS,
-                        fg=PRIMARYBUTTONTEXT,
-                        command=lambda: swap_frames(context_frame_3))
+    Context_3_Button = AppButton(navigation_frame,
+                                 text="Button 3",
+                                 command=lambda: swap_frames(context_frame_3))
     Context_3_Button.grid(row=5, column=1, sticky="nsew")  
 
-    Context_4_Button = tk.Button(navigation_frame,
-                        text="Button 4",
-                        font=('Arial', 12, 'bold'),
-                        bg=PRIMARYBUTTONS,
-                        fg=PRIMARYBUTTONTEXT,
-                        command=lambda: swap_frames(context_frame_4))
+    Context_4_Button = AppButton(navigation_frame,
+                                 text="Button 4",
+                                 command=lambda: swap_frames(context_frame_4))
     Context_4_Button.grid(row=7, column=1, sticky="nsew")  
 
-    Context_5_Button = AppButton(navigation_frame,
-                                 text="Button 5",
-                                 command=lambda: swap_frames(sys.exit(0)),).grid(row=9,
-                                                                                    column=1,
-                                                                                    sticky="nsew")
+    Exit_Btn = AppButton(navigation_frame,
+                                 text="Aus",
+                                 command=lambda:sys.exit(0))
+    Exit_Btn.grid(row=9, column=1, sticky="nsew")
     
     root.mainloop()
 
