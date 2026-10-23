@@ -2,12 +2,85 @@ import flet as ft
 
 
 def main(page: ft.Page):
+    def button_clicked(e: ft.Event[ft.Button]):
+        print("Leck Eier Fridrich März")
 
     # Erstellt das Formularfenster und legt seine Größe fest.
     page.title = "Flet Input and Selections Demo"
-    page.window.width = 360
-    page.window.height = 320
+    page.window.maximized = True
+    #page.window.width = 360
+    #page.window.height = 320
 
+    page.add(
+    ft.SafeArea(
+        expand=True,
+        content=ft.Row(
+            expand=True,
+            spacing=20,
+            controls=[
+                ft.Column(
+                    expand=1,
+                    alignment=ft.MainAxisAlignment.START,
+                    spacing=10,
+                    scroll=ft.ScrollMode.AUTO,
+                    controls=[
+                        ft.Row(
+                            spacing=10,
+                            controls=[
+                                ft.Button(
+                                    content="Button 1",
+                                    on_click=button_clicked,
+                                ),
+
+                            ],
+                        ),
+                        ft.Row(
+                            spacing=10,
+                            controls=[
+                                ft.Button(
+                                    content="Button 2",
+                                    on_click=button_clicked,
+                                ),
+
+                            ],
+                        ),
+                        ft.Row(
+                            spacing=10,
+                            controls=[
+                                ft.Button(
+                                    content="Button 3",
+                                    on_click=button_clicked,
+                                ),
+
+                            ],
+                        ),
+                        ft.Row(
+                            spacing=10,
+                            controls=[
+                                ft.Button(
+                                    content="Button 4",
+                                    on_click=button_clicked,
+                                ),
+
+                            ],
+                        ),
+                    ],
+                ),  # Komma zwischen den beiden Columns
+                ft.Column(
+                    expand=1,
+                    alignment=ft.MainAxisAlignment.CENTER,
+                    scroll=ft.ScrollMode.AUTO,
+                    controls=[
+                        ft.Text("Zweite Column"),
+                        ft.Text("Weitere Inhalte hier"),
+                    ],
+                ),
+            ],
+        ),
+    ),
+    )
+    
+'''
     name = ft.TextField(label="Name")
     agree = ft.Checkbox(label="I agree to the terms")
 
@@ -41,15 +114,15 @@ def main(page: ft.Page):
     )
     notifications = ft.Switch(label="Enable notifications", value=True)
 
-    # Fügt alle Formularfelder in der gewünschten Reihenfolge zur Seite hinzu.
-    page.add(
-        ft.Text("Fill in the form and adjust the options:"),
+    
         name,
         agree,
         level,
         color,
         framework,
         notifications,
-    )
-
+    '''
+    
+    # Fügt alle Formularfelder in der gewünschten Reihenfolge zur Seite hinzu.
+ 
 ft.run(main)
