@@ -17,29 +17,26 @@ arbeitszeit-rechner/
 
 ```
 
-# Class Widget with create Methode
 
-# UX
+## für venv in Code Terminal 
 
-Purpose	Color
-App background = #F4F6F8
+```
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass 
+```
 
-Content panels / input fields = #FFFFFF
+## activate Venv
 
-Main text = #1F2937
+```
+.\.venv\Scripts\Activate.ps1 
+```
+## pip install flet
 
-Secondary text = #5B6573
+```
+python -m pip install flet      
+```
 
-Borders = #D6DCE3
+## für run
 
-Primary buttons / active navigation = #1F3A5F
-
-Button text = #FFFFFF
-
-Button hover / pressed state = #162B46
-
-Secondary accent = #0F766E
-
-Soft accent background = #D9F2EE
-
-Success / warning / error = #166534 / #92400E / #B42318
+```
+.\.venv\Scripts\python.exe .\src\flet_gui.py  
+```
