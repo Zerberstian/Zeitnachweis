@@ -50,46 +50,52 @@ def main(page: ft.Page):
             expand=True,
             content=ft.Row(
                 expand=True,
+                vertical_alignment=ft.CrossAxisAlignment.STRETCH,
                 spacing=20,
                 controls=[
                     # Linke Column mit den Navigations-Buttons
                     ft.Column(
-                        expand=1,
-                        alignment=ft.MainAxisAlignment.START,
+                        expand=2,
                         spacing=10,
-                        scroll=ft.ScrollMode.AUTO,
                         controls=[
                             ft.Row(
+                                expand=True,
+                                vertical_alignment=ft.CrossAxisAlignment.STRETCH,
                                 controls=[
-                                    ft.Button(
-                                        content="Button 1",
-                                        on_click=lambda e: show_frame(frame1),
-                                    ),
+                                    ft.Column(
+                                        expand=True,
+                                        controls=[
+                                            ft.Button(
+                                                expand=2,
+                                                content="Button 1",
+                                                on_click=lambda e: show_frame(frame1),
+                                                style=ft.ButtonStyle(
+                                                    shape=ft.RoundedRectangleBorder(
+                                                        radius=1200
+                                                    )
+                                                ),
+                                            ),
+                                            ft.Button(
+                                                expand=2,
+                                                content="Button 2",
+                                                on_click=lambda e: show_frame(frame2),
+                                            ),
+                                            ft.Button(
+                                                expand=2,
+                                                content="Button 3",
+                                                on_click=lambda e: show_frame(frame3),
+                                            ),
+                                            ft.Button(
+                                                expand=2,
+                                                content="Button 4",
+                                                on_click=lambda e: show_frame(frame4),
+                                            ),
+                                        ]
+                                    )
                                 ],
                             ),
                             ft.Row(
-                                controls=[
-                                    ft.Button(
-                                        content="Button 2",
-                                        on_click=lambda e: show_frame(frame2),
-                                    ),
-                                ],
-                            ),
-                            ft.Row(
-                                controls=[
-                                    ft.Button(
-                                        content="Button 3",
-                                        on_click=lambda e: show_frame(frame3),
-                                    ),
-                                ],
-                            ),
-                            ft.Row(
-                                controls=[
-                                    ft.Button(
-                                        content="Button 4",
-                                        on_click=lambda e: show_frame(frame4),
-                                    ),
-                                ],
+                                expand=True
                             ),
                         ],
                     ),
