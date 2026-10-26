@@ -42,7 +42,6 @@ def main(page: ft.Page):
     def show_frame(frame_to_show):
         for frame in frames:
             frame.visible = frame is frame_to_show
-
         page.update()
 
     page.add(
@@ -55,7 +54,7 @@ def main(page: ft.Page):
                 controls=[
                     # Linke Column mit den Navigations-Buttons
                     ft.Column(
-                        expand=2,
+                        expand=1,
                         spacing=10,
                         controls=[
                             ft.Row(
@@ -64,31 +63,27 @@ def main(page: ft.Page):
                                 controls=[
                                     ft.Column(
                                         expand=True,
+                                        horizontal_alignment=ft.CrossAxisAlignment.STRETCH,
                                         controls=[
                                             ft.Button(
-                                                expand=2,
+                                                expand=True,
                                                 content="Button 1",
                                                 on_click=lambda e: show_frame(frame1),
-                                                style=ft.ButtonStyle(
-                                                    shape=ft.RoundedRectangleBorder(
-                                                        radius=1200
-                                                    )
-                                                ),
+                                                
                                             ),
                                             ft.Button(
-                                                expand=2,
+                                                expand=True,
                                                 content="Button 2",
-                                                on_click=lambda e: show_frame(frame2),
-                                            ),
+                                                on_click=lambda e: show_frame(frame2)                                            ),
                                             ft.Button(
-                                                expand=2,
+                                                expand=True,
                                                 content="Button 3",
                                                 on_click=lambda e: show_frame(frame3),
                                             ),
                                             ft.Button(
-                                                expand=2,
+                                                expand=True,
                                                 content="Button 4",
-                                                on_click=lambda e: show_frame(frame4),
+                                                on_click=lambda e: show_frame(frame4), 
                                             ),
                                         ]
                                     )
@@ -97,14 +92,16 @@ def main(page: ft.Page):
                             ft.Row(
                                 expand=True
                             ),
+                            ft.Row(
+                                expand=True
+                            ),
                         ],
                     ),
 
-                    # Rechte Column mit allen Frames
-                    ft.Column(
-                        expand=10,
-                        alignment=ft.MainAxisAlignment.START,
-                        scroll=ft.ScrollMode.AUTO,
+                    # Rechter Bereich mit allen Frames
+                    ft.Row(
+                        expand=7,
+                        vertical_alignment=ft.CrossAxisAlignment.STRETCH,
                         controls=frames,
                     ),
                 ],
