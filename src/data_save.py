@@ -1,10 +1,20 @@
+import re
 import json
 import datetime
 from pathlib import Path
 
 
-def dump_data_to_json(entry):
-    json_path = Path("Json/Zeitnachweise.json")
+def safe_filename_part(value):
+    return re.sub(r"[^\w-]", "_", str(value), flags=re.UNICODE).strip("_")
+
+def dump_data_to_json(entry, names):
+    family_name_input, name_input = names
+
+    filename = (
+        f"{safe_filename_part(family_name_input)}_"
+        f"{safe_filename_part(name_input)}.json"
+    )
+    json_path = Path("Json") / filename
     json_path.parent.mkdir(parents=True, exist_ok=True)
 
     
@@ -52,5 +62,5 @@ def saving(result, names):
     
     print(json.dumps(entry, indent=4, ensure_ascii=False, default=str))
 
-    dump_data_to_json(entry)
+    dump_data_to_json(entry, names)
    
