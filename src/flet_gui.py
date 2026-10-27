@@ -3,6 +3,7 @@ import flet as ft
 
 def main(page: ft.Page):
     page.title = "Flet Input and Selections Demo"
+    page.theme_mode = ft.ThemeMode.LIGHT
     page.window.maximized = True
 
     # Die vier "Frames" für die rechte Seite
