@@ -23,10 +23,10 @@
         "familyname": "Mustermann",
         "name": "Max",
         "date": "2026-10-27",
-        "start_time": "07:30",
+        "start_time": "07:25",
         "end_time": "16:15",
         "houers_worked": 8,
-        "minutes_worked": 0,
-        "over_time": 0
+        "minutes_worked": 5,
+        "over_time": 5
     }
 }
