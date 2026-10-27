@@ -1,5 +1,5 @@
 import re
-#import tkinter as tk
+import tkinter as tk
 
 LETTERS_AND_SEPARATORS = re.compile(r"[^\W\d_]+(?:[-'’][^\W\d_]+)*")
 
@@ -9,17 +9,17 @@ LETTERS_AND_SEPARATORS = re.compile(r"[^\W\d_]+(?:[-'’][^\W\d_]+)*")
 ### Name Inputs ###
 def requesting_name(entr):
     while True:
-        #name = input(name_prompt).strip() #name_var.get()#
-        name = entr.get()
+        name = input(entr).strip() #name_var.get()#
+        #name = entr.get()
         
         if len(name) > 20:
             print("Der Name ist zu lang (maximal 20 Zeichen).")
-            entr.delete(0,len(name))
-            entr.insert(0,"")
+            #entr.delete(0,len(name))
+            #entr.insert(0,"")
         elif not LETTERS_AND_SEPARATORS.fullmatch(name) and name != "":
             print("Bitte gib nur Buchstaben ein.")
-            entr.delete(0,len(name))
-            entr.insert(0,"")
+            #entr.delete(0,len(name))
+            #entr.insert(0,"")
         else:
             return name
 

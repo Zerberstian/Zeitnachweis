@@ -1,24 +1,34 @@
 import json
 import datetime
-
-'''
-with open("Zeitnachweise.json", "r", encoding="utf-8") as f:
-    Zeitnachweise = json.load(f)
-'''
+from pathlib import Path
 
 
+def dump_data_to_json(entry):
+    json_path = Path("Json/Zeitnachweise.json")
+    json_path.parent.mkdir(parents=True, exist_ok=True)
 
-def dump_data_to_json(write):
-    with open("Json/Zeitnachweise.json", "w", encoding="utf-8") as f:
-        json.dump(write, f, indent=4, ensure_ascii=False)
+    
+    if json_path.exists() and json_path.stat().st_size > 0:
+        with json_path.open("r", encoding="utf-8") as f:
+            daten = json.load(f)
+    else:
+        daten = {}
 
-importet_date = str(datetime.date.today())
+    daten[entry["date"]] = entry
+
+
+    with json_path.open("w", encoding="utf-8") as f:
+        json.dump(daten, f, indent=4, ensure_ascii=False)
+    
+
 
 def saving(result, names):
     overtime, result_hours, result_minutes, work_start, work_end = result
     family_name_input, name_input = names
+    importet_date = str(datetime.date.today())
 
-    dictionary_data = dict(
+
+    entry = dict(
         familyname = "",
         name = "",
         date = "",
@@ -29,7 +39,7 @@ def saving(result, names):
         over_time = ""
     )
 
-    dictionary_data.update({
+    entry.update({
         "familyname": family_name_input,
         "name": name_input,
         "date": importet_date,
@@ -40,8 +50,7 @@ def saving(result, names):
         "over_time": overtime,
     })
     
-    print(json.dumps(dictionary_data, indent=4, ensure_ascii=False, default=str))
+    print(json.dumps(entry, indent=4, ensure_ascii=False, default=str))
 
-    to_dump_data = dictionary_data
-    dump_data_to_json(write=to_dump_data)
+    dump_data_to_json(entry)
    
