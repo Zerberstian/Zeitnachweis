@@ -1,24 +1,57 @@
 import flet as ft
 
 
+
 def main(page: ft.Page):
     page.title = "Flet Input and Selections Demo"
     page.theme_mode = ft.ThemeMode.LIGHT
     page.window.maximized = True
+
+
+    family_name = ft.TextField(label="Familienname")
+    first_name = ft.TextField(label="Vorname")
+    start_time = ft.TextField(label="Startzeit (00:00)")
+    end_time = ft.TextField(label="Endzeit (00:00)")
+
+    def submit(_):
+
+        input_values = [
+            (family_name.value or "").strip(),
+            (first_name.value or "").strip(),
+            (start_time.value or "").strip(),
+            (end_time.value or "").strip(),
+        ]
+        print(input_values)
 
     # Die vier "Frames" für die rechte Seite
     frame1 = ft.Container(
         expand=True,
         padding=20,
         bgcolor=ft.Colors.BLUE_50,
-        content=ft.Column(
+        content=ft.Row(
                     expand=True,
-                    spacing=10,
+                    spacing=10, 
                     controls=[
-                        ft.TextField(label="Name"),
+                            ft.Column(
+                                expand=True,
+                                spacing=10,
+                                controls=[
+                                    family_name,
+                                    first_name,
+                                    start_time,
+                                    end_time,
+                                ],
+                            ),
+                            ft.Column(
+                                expand=True,
+                                spacing=10,
+                                controls=[
+                                    ft.Button(content="Einreichen", on_click=submit)
+                                    ]
+                            ),
+        
                     ],
-            ),
-       
+                )
     )
 
     frame2 = ft.Container(
