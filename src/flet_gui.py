@@ -10,7 +10,14 @@ def main(page: ft.Page):
         expand=True,
         padding=20,
         bgcolor=ft.Colors.BLUE_50,
-        content=ft.Text("Inhalt von Frame 1"),
+        content=ft.Column(
+                    expand=True,
+                    spacing=10,
+                    controls=[
+                        ft.TextField(label="Name"),
+                    ],
+            ),
+       
     )
 
     frame2 = ft.Container(
