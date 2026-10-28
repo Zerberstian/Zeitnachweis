@@ -9,6 +9,7 @@ def main(page: ft.Page):
 
 
     family_name = ft.TextField(label="Familienname")
+    middle_name = ft.TextField(label="Zweitname (Optional)")
     first_name = ft.TextField(label="Vorname")
     start_time = ft.TextField(label="Startzeit (00:00)")
     end_time = ft.TextField(label="Endzeit (00:00)")
@@ -17,6 +18,7 @@ def main(page: ft.Page):
         # mittelnamen + clear/if "" error
         input_values = [
             (family_name.value or "").strip(),
+            (middle_name.value or "").strip(),
             (first_name.value or "").strip(),
             (start_time.value or "").strip(),
             (end_time.value or "").strip(),
@@ -37,6 +39,7 @@ def main(page: ft.Page):
                                 spacing=10,
                                 controls=[
                                     family_name,
+                                    middle_name,
                                     first_name,
                                     start_time,
                                     end_time,
