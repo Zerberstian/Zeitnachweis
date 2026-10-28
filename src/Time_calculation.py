@@ -1,56 +1,29 @@
-#from User_Input import start_time_request, end_time_request
-import sys
-
 PAUSENZEIT = 45
 
 def calculating(time_inputs):
-    a, b = time_inputs
-    correction = "j"
-    while correction == "j":
+    work_start_input, work_end_input = time_inputs
 
-        work_start_input = a
-        work_end_input = b
+    work_start_hours, work_start_minutes = map(int, work_start_input.split(":"))
+    work_end_hours, work_end_minutes = map(int, work_end_input.split(":"))
 
-        work_start = work_start_input.split(":")
-        work_end = work_end_input.split(":")
-        
-        work_start_hours = int(work_start[0])
-        work_start_minutes = int(work_start[1])
+    start_total_minutes = (work_start_hours * 60) + work_start_minutes
+    end_total_minutes = (work_end_hours * 60) + work_end_minutes
+    work_time_result = end_total_minutes - start_total_minutes - PAUSENZEIT
 
-        work_end_hours = int(work_end[0])
-        work_end_minutes = int(work_end[1])
+    if work_time_result <= 0:
+        raise ValueError(
+            f"Fehler: Du hast weniger als die Pausenzeit "
+            f"({PAUSENZEIT} Minuten) gearbeitet."
+        )
 
-        start_total_minutes = (work_start_hours * 60) + work_start_minutes
-        end_total_minutes = (work_end_hours * 60) + work_end_minutes
+    result_hours = work_time_result // 60
+    result_minutes = work_time_result % 60
+    overtime = -(480 - work_time_result)
 
-        work_Time_Result = end_total_minutes - start_total_minutes - PAUSENZEIT
-
-        if work_Time_Result <= 0:
-            print(f"Fehler: Du hast weniger als die Pausenzeit ({PAUSENZEIT} Minuten) gearbeitet")
-
-            correction = ""
-            while correction != "j":
-                correction = input(f"Möchtest du nochmal korrigieren? (j/n)\n").strip().lower()
-
-                '''
-                if correction == "j":
-                    overtime, result_hours, result_minutes = calculating()
-                    #return
-                '''
-
-                if correction == "n":
-                    # Placeholder for GUI to exiting to main menu
-                    print("Programm schließt...")
-                    sys.exit(0)
-                
-                elif correction != "j":
-                    print("Fehler bei der Eingabe - bitte j oder n eingeben")
-        else:
-            correction = "n"        
-        
-    result_hours = work_Time_Result // 60
-    result_minutes = work_Time_Result % 60
-            
-    overtime = -(480 - work_Time_Result) 
-
-    return overtime, result_hours, result_minutes, work_start_input, work_end_input
+    return (
+        overtime,
+        result_hours,
+        result_minutes,
+        work_start_input,
+        work_end_input,
+    )

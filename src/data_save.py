@@ -4,16 +4,31 @@ import datetime
 from pathlib import Path
 
 
+def split_names(names):
+    if len(names) == 2:
+        family_name, first_name = names
+        middle_name = ""
+    elif len(names) == 3:
+        family_name, middle_name, first_name = names
+    else:
+        raise ValueError(
+            "Names must contain a family name, optional middle name, and first name."
+        )
+
+    return family_name, middle_name, first_name
+
+
 def safe_filename_part(value):
     return re.sub(r"[^\w-]", "_", str(value), flags=re.UNICODE).strip("_")
 
 def dump_data_to_json(entry, names):
-    family_name_input, name_input = names
+    family_name_input, middle_name_input, name_input = split_names(names)
 
-    filename = (
-        f"{safe_filename_part(family_name_input)}_"
-        f"{safe_filename_part(name_input)}.json"
-    )
+    filename_parts = [family_name_input]
+    if middle_name_input:
+        filename_parts.append(middle_name_input)
+    filename_parts.append(name_input)
+    filename = "_".join(safe_filename_part(part) for part in filename_parts) + ".json"
     json_path = Path("Json") / filename
     json_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -34,7 +49,7 @@ def dump_data_to_json(entry, names):
 
 def saving(result, names):
     overtime, result_hours, result_minutes, work_start, work_end = result
-    family_name_input, name_input = names
+    family_name_input, middle_name_input, name_input = split_names(names)
     importet_date = str(datetime.date.today())
 
 
@@ -51,6 +66,7 @@ def saving(result, names):
 
     entry.update({
         "familyname": family_name_input,
+        "middle_name": middle_name_input,
         "name": name_input,
         "date": importet_date,
         "start_time": work_start,
