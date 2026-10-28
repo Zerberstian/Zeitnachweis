@@ -14,7 +14,7 @@ def main(page: ft.Page):
     end_time = ft.TextField(label="Endzeit (00:00)")
 
     def submit(_):
-
+        # mittelnamen + clear/if "" error
         input_values = [
             (family_name.value or "").strip(),
             (first_name.value or "").strip(),
