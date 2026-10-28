@@ -2,6 +2,11 @@ import re
 import tkinter as tk
 
 LETTERS_AND_SEPARATORS = re.compile(r"[^\W\d_]+(?:[-'’][^\W\d_]+)*")
+TIME_FORMAT = re.compile(r"(?:[01]\d|2[0-3]):[0-5]\d")
+
+
+def is_valid_time(value):
+    return bool(TIME_FORMAT.fullmatch(value.strip()))
 
 
 #name_var=tk.StringVar()
@@ -34,7 +39,7 @@ def time_request(time_prompt):
     while True:
         time = input(time_prompt).strip()
 
-        if not re.fullmatch(r"(?:[01]\d|2[0-3]):[0-5]\d", time):
+        if not is_valid_time(time):
             print("Gib nur eine Uhrzeit im Format HH:MM ein")
         else:
             return time

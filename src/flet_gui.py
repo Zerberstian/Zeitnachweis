@@ -1,4 +1,5 @@
 import flet as ft
+from User_Input import is_valid_time
 
 
 
@@ -15,7 +16,6 @@ def main(page: ft.Page):
     end_time = ft.TextField(label="Endzeit (00:00)")
 
     def submit(_):
-        # mittelnamen + clear/if "" error
         input_values = [
             (family_name.value or "").strip(),
             (middle_name.value or "").strip(),
@@ -23,7 +23,41 @@ def main(page: ft.Page):
             (start_time.value or "").strip(),
             (end_time.value or "").strip(),
         ]
+
+        family_name.error = (
+            "Bitte gib einen Familiennamen ein." if not input_values[0] else None
+        )
+        first_name.error = (
+            "Bitte gib einen Vornamen ein." if not input_values[2] else None
+        )
+        start_time.error = (
+            "Bitte gib eine Startzeit ein."
+            if not input_values[3]
+            else (
+                "Gib eine Uhrzeit im Format HH:MM ein."
+                if not is_valid_time(input_values[3])
+                else None
+            )
+        )
+        end_time.error = (
+            "Bitte gib eine Endzeit ein."
+            if not input_values[4]
+            else (
+                "Gib eine Uhrzeit im Format HH:MM ein."
+                if not is_valid_time(input_values[4])
+                else None
+            )
+        )
+
+        if any((family_name.error, first_name.error, start_time.error, end_time.error)):
+            page.update()
+            return
+        
+        page.update()
         print(input_values)
+
+        return input_values
+         
 
     # Die vier "Frames" für die rechte Seite
     frame1 = ft.Container(
