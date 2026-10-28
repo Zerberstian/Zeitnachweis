@@ -39,13 +39,18 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
         ez_password.error = (
             "Bitte gib ein Passwort ein"
         )
+
+        login_frame.visible = False
+        Content_Parent_Frame.visible = True
+        page.update()
+        
         '''
 
         # dass hier bei Content Frame 2 oder so
 
         def safe_filename_part(value):
             return re.sub(r"[^\w-]", "_", str(value), flags=re.UNICODE).strip("_")
-       
+
         filename_parts = [login_data[0]]
         filename_parts.append(login_data[1])
         filename = "_".join(safe_filename_part(part) for part in filename_parts) + ".json"
@@ -56,8 +61,8 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
             d = json.load(f)
 
         print(d)
-         '''
-           
+        '''
+        
     def submit(_):
         # strip inputs from gotten Values
         input_values = (
@@ -106,7 +111,7 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
             page.update()
 
     login_frame = ft.Container(
-        expand=True,
+        expand=100,
         content=ft.Column(
                     expand=True,
                     spacing=10, 
@@ -115,59 +120,122 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
                         first_name,
                         ez_password,
                         ft.Button(
-                            expand=True,
+                            #expand=True,
                             content="Anmelden",
-                            on_click=lambda e: login, 
+                            on_click=lambda e: login(), 
                         ),
                     ]   
         )
         
     )
 
+    right_frames = ft.Row(
+        expand=7,
+        vertical_alignment=ft.CrossAxisAlignment.STRETCH,
+        controls=[],
+    )
+
     Content_Parent_Frame = ft.Container(
         expand=True,
+        visible=False,
         content=ft.Column(
                     expand=True,
                     spacing=10, 
-                    controls= [
-                        
-                    ]   
-        )
-    )
+                    controls= ft.Row(
+                        expand=True,
+                        vertical_alignment=ft.CrossAxisAlignment.STRETCH,
+                        spacing=20,
+                        controls=[
+                            # Linke Column mit den Navigations-Buttons
+                            ft.Column(
+                                expand=1,
+                                spacing=10,
+                                controls=[
+                                    ft.Row(
+                                        expand=True,
+                                        vertical_alignment=ft.CrossAxisAlignment.STRETCH,
+                                        controls=[
+                                            ft.Column(
+                                                expand=True,
+                                                horizontal_alignment=ft.CrossAxisAlignment.STRETCH,
+                                                controls=[
+                                                    ft.Button(
+                                                        expand=True,
+                                                        content="Button 1",
+                                                        on_click=lambda e: show_frame(Content_Frame_1),
+                                                        
+                                                    ),
+                                                    ft.Button(
+                                                        expand=True,
+                                                        content="Button 2",
+                                                        on_click=lambda e: show_frame(Content_Frame_2)                                            ),
+                                                    ft.Button(
+                                                        expand=True,
+                                                        content="Button 3",
+                                                        on_click=lambda e: show_frame(Content_Frame_3),
+                                                    ),
+                                                    ft.Button(
+                                                        expand=True,
+                                                        content="Button 4",
+                                                        on_click=lambda e: show_frame(Content_Frame_4), 
+                                                    ),
+                                                ]
+                                            )
+                                        ],
+                                    ),
+                                    ft.Row(
+                                        expand=True
+                                    ),
+                                    ft.Row(
+                                        expand=True,
+                                        controls=[
+                                            ft.Button(
+                                                expand=False,
+                                                content="Settings",
+                                                on_click=lambda e: show_frame(Content_Frame_4), 
+                                            ),
+                                        ],
+                                    ),
+                                ],
+                            ),
+
+                            # Rechter Bereich mit allen Frames
+                            right_frames,
+                        ],
+                    ),
+                ),
+            )
+
+
 
     # Die vier "Frames" für die rechte Seite
     Content_Frame_1 = ft.Container(
         expand=True,
         padding=20,
         bgcolor=ft.Colors.BLUE_50,
-        visible=False, # <= maby hier schauen wegens vis (wenn parent invis müsste das trozdem invis sein und danach wieder vis werden)
         content=ft.Row(
+            expand=True,
+            spacing=10,
+            controls=[
+                ft.Column(
                     expand=True,
-                    spacing=10, 
-                    controls=ft.Container(
-                                expand=True, 
-                                content=[
-                                    ft.Column(
-                                        expand=True,
-                                        spacing=10,
-                                        controls=[
-                                            family_name,
-                                            middle_name,
-                                            first_name,
-                                            start_time,
-                                            end_time,
-                                            ft.Button(content="Einreichen", on_click=submit)
-                                        ],
-                                    ),
-                                    ft.Column(
-                                        expand=True,
-                                        spacing=10,
-                                        controls=[]
-                                    ),
-
-                                ],
-                        )
-                )
+                    spacing=10,
+                    controls=[
+                        family_name,
+                        middle_name,
+                        first_name,
+                        start_time,
+                        end_time,
+                        ft.Button(content="Einreichen", on_click=submit),
+                    ],
+                ),
+                ft.Column(
+                    expand=True,
+                    spacing=10,
+                    controls=[],
+                ),
+            ],
+        ),
     )
 
     Content_Frame_2 = ft.Container(
@@ -194,7 +262,8 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
         visible=False,
     )
 
-    frames = [login_frame,Content_Parent_Frame, Content_Frame_1, Content_Frame_2, Content_Frame_3, Content_Frame_4]
+    frames = [ Content_Frame_1, Content_Frame_2, Content_Frame_3, Content_Frame_4]
+    right_frames.controls = frames
 
     def show_frame(frame_to_show):
         for frame in frames:
@@ -213,78 +282,8 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
                     Content_Parent_Frame,
                 ]
             )
-
-            expand=True,
-            content=ft.Row(
-                expand=True,
-                vertical_alignment=ft.CrossAxisAlignment.STRETCH,
-                spacing=20,
-                controls=[
-                    # Linke Column mit den Navigations-Buttons
-                    ft.Column(
-                        expand=1,
-                        spacing=10,
-                        controls=[
-                            ft.Row(
-                                expand=True,
-                                vertical_alignment=ft.CrossAxisAlignment.STRETCH,
-                                controls=[
-                                    ft.Column(
-                                        expand=True,
-                                        horizontal_alignment=ft.CrossAxisAlignment.STRETCH,
-                                        controls=[
-                                            ft.Button(
-                                                expand=True,
-                                                content="Button 1",
-                                                on_click=lambda e: show_frame(Content_Frame_1),
-                                                
-                                            ),
-                                            ft.Button(
-                                                expand=True,
-                                                content="Button 2",
-                                                on_click=lambda e: show_frame(Content_Frame_2)                                            ),
-                                            ft.Button(
-                                                expand=True,
-                                                content="Button 3",
-                                                on_click=lambda e: show_frame(Content_Frame_3),
-                                            ),
-                                            ft.Button(
-                                                expand=True,
-                                                content="Button 4",
-                                                on_click=lambda e: show_frame(Content_Frame_4), 
-                                            ),
-                                        ]
-                                    )
-                                ],
-                            ),
-                            ft.Row(
-                                expand=True
-                            ),
-                            ft.Row(
-                                expand=True,
-                                controls=[
-                                    ft.Button(
-                                        expand=False,
-                                        content="Settings",
-                                        on_click=lambda e: show_frame(Content_Frame_4), 
-                                    ),
-                                ],
-                            ),
-                        ],
-                    ),
-
-                    # Rechter Bereich mit allen Frames
-                    ft.Row(
-                        expand=7,
-                        vertical_alignment=ft.CrossAxisAlignment.STRETCH,
-                        controls=frames,
-                    ),
-                ],
-            ),
-        ),
-    )
-
-
+        )
+    )            
 def start_gui(on_submit: Callable[[SubmittedValues], None]) -> None:
     # Flet supplies page; bind the application callback required by main().
     ft.run(lambda page: main(page, on_submit))
