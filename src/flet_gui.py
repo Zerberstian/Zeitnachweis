@@ -114,16 +114,28 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
         expand=100,
         content=ft.Column(
                     expand=True,
+                    alignment=ft.MainAxisAlignment.CENTER,
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                     spacing=10, 
                     controls= [
                         family_name,
                         first_name,
                         ez_password,
-                        ft.Button(
-                            #expand=True,
-                            content="Anmelden",
-                            on_click=lambda e: login(), 
-                        ),
+                        ft.Row(
+                            alignment=ft.MainAxisAlignment.CENTER,
+                            controls=[
+                                ft.Button(
+                                #expand=True,
+                                content="Anmelden",
+                                on_click=lambda e: login(), 
+                                ),
+                                ft.Button(
+                                    content="Nutzer anlegen",
+                                ),
+                            ]
+                        )
+
+                        
                     ]   
         )
         
@@ -287,3 +299,9 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
 def start_gui(on_submit: Callable[[SubmittedValues], None]) -> None:
     # Flet supplies page; bind the application callback required by main().
     ft.run(lambda page: main(page, on_submit))
+
+if __name__ == "__main__":
+    def standalone_submit(values: SubmittedValues) -> None:
+        print("Formularwerte:", values)
+
+    start_gui(standalone_submit)
