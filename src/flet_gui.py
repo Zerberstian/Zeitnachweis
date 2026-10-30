@@ -125,9 +125,9 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
                             alignment=ft.MainAxisAlignment.CENTER,
                             controls=[
                                 ft.Button(
-                                #expand=True,
-                                content="Anmelden",
-                                on_click=lambda e: login(), 
+                                    #expand=True,
+                                    content="   Anmelden   ",
+                                    on_click=lambda e: login(), 
                                 ),
                                 ft.Button(
                                     content="Nutzer anlegen",

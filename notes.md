@@ -40,3 +40,11 @@ python -m pip install flet
 ```
 .\.venv\Scripts\python.exe .\src\flet_gui.py  
 ```
+
+#############################################################################
+
+## Zukunftsscheiß
+
+- Bei anmeldung API request zur User DB via Python Flask API
+- Hash vergleich mit Salz
+- 
