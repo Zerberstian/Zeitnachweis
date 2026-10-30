@@ -254,10 +254,10 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
 
     formated_json_data = [
         ft.Text(
-            f"ID: {eintrag.get('id', eintrag_id)} | \n"
-            f"Datum: {eintrag.get('date', '')} | \n"
-            f"Start: {eintrag.get('start_time', '')} | \n"
-            f"Ende: {eintrag.get('end_time', '')} | \n"
+            f"ID: {eintrag.get('id', eintrag_id)}  \n"
+            f"Datum: {eintrag.get('date', '')}  \n"
+            f"Start: {eintrag.get('start_time', '')}  \n"
+            f"Ende: {eintrag.get('end_time', '')}  \n"
             f"Arbeitszeit: {eintrag.get('houers_worked', 0)} Std. \n"
             f"{eintrag.get('minutes_worked', 0)} Min.\n",
             size=16,
@@ -270,7 +270,7 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
         padding=20,
         bgcolor=ft.Colors.GREEN_50,
         visible=False,
-        content=ft.Row(
+        content=ft.Column(
             expand=True,
             spacing=10,
             scroll=ft.ScrollMode.AUTO,
