@@ -1,5 +1,6 @@
 import re
 import json
+import uuid
 import datetime
 from pathlib import Path
 
@@ -39,7 +40,7 @@ def dump_data_to_json(entry, names):
     else:
         daten = {}
 
-    daten[entry["date"]] = entry
+    daten[entry["id"]] = entry
 
 
     with json_path.open("w", encoding="utf-8") as f:
@@ -65,6 +66,7 @@ def saving(result, names):
     )
 
     entry.update({
+        "id":str(uuid.uuid4()),
         "familyname": family_name_input,
         "middle_name": middle_name_input,
         "name": name_input,

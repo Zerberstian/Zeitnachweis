@@ -60,7 +60,7 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
         with open(json_path, 'r') as f:
             d = json.load(f)
 
-        print(d)
+        
         '''
         
     def submit(_):
@@ -249,13 +249,34 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
             ],
         ),
     )
+    with open("Json/Muster_Peter.json", "r", encoding="utf-8") as f:
+        raw_json_data = json.load(f)
+
+    formated_json_data = [
+        ft.Text(
+            f"ID: {eintrag.get('id', eintrag_id)} | \n"
+            f"Datum: {eintrag.get('date', '')} | \n"
+            f"Start: {eintrag.get('start_time', '')} | \n"
+            f"Ende: {eintrag.get('end_time', '')} | \n"
+            f"Arbeitszeit: {eintrag.get('houers_worked', 0)} Std. \n"
+            f"{eintrag.get('minutes_worked', 0)} Min.\n",
+            size=16,
+        )
+        for eintrag_id, eintrag in raw_json_data.items()
+    ]
 
     Content_Frame_2 = ft.Container(
         expand=True,
         padding=20,
         bgcolor=ft.Colors.GREEN_50,
-        content=ft.Text("Inhalt von Frame 2"),
         visible=False,
+        content=ft.Row(
+            expand=True,
+            spacing=10,
+            scroll=ft.ScrollMode.AUTO,
+            controls=formated_json_data,
+        ),
+        
     )
 
     Content_Frame_3 = ft.Container(
