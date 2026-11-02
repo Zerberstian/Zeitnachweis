@@ -24,7 +24,7 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
     start_time = ft.TextField(label="Startzeit (00:00)")
     end_time = ft.TextField(label="Endzeit (00:00)")
 
-    def login():
+    def login(_):
         login_data = (
             (family_name.value or "").strip(),
             (first_name.value or "").strip(),
@@ -127,7 +127,7 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
                                 ft.Button(
                                     #expand=True,
                                     content="   Anmelden   ",
-                                    on_click=lambda e: login(), 
+                                    on_click=login, 
                                 ),
                                 ft.Button(
                                     content="Nutzer anlegen",
