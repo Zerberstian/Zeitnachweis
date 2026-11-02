@@ -17,9 +17,9 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
     page.window.maximized = True
 
 
-    family_name = ft.TextField(label="Familienname")
+    family_name = ft.TextField(label="Familienname")#, hint_text=login[0])
     middle_name = ft.TextField(label="Zweitname (Optional)")
-    first_name = ft.TextField(label="Vorname")
+    first_name = ft.TextField(label="Vorname")#, hint_text=login[1])
     ez_password = ft.TextField(label="Passwort (123)")
     start_time = ft.TextField(label="Startzeit (00:00)")
     end_time = ft.TextField(label="Endzeit (00:00)")
@@ -81,9 +81,21 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
         ]
         time_entries_column.controls = formatted_json_data
 
+        family_name.disabled = True
+        middle_name.disabled = True
+        first_name.disabled = True
+        family_name.update()
+        middle_name.update()
+        first_name.update()
+        
         login_frame.visible = False
         Content_Parent_Frame.visible = True
-        
+        page.update()
+
+        '''
+        returns = (login_data[0], login_data[1])
+        return returns
+        '''
 
     def submit(_):
         input_values = (
@@ -214,7 +226,7 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
                     ),
                 ),
             )
-
+    
     EntryCreationFrame = ft.Container(
         expand=True,
         padding=20,

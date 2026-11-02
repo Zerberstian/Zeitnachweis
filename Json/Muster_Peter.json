@@ -34,5 +34,29 @@
         "over_time": 0,
         "id": "6330510f-d54f-4b4d-b358-8a381d8b7953",
         "middle_name": ""
+    },
+    "5ca9ff13-2561-42d2-a3ef-979c10527b88": {
+        "familyname": "Muster",
+        "name": "Peter",
+        "date": "2026-11-02",
+        "start_time": "07:30",
+        "end_time": "16:15",
+        "houers_worked": 8,
+        "minutes_worked": 0,
+        "over_time": 0,
+        "id": "5ca9ff13-2561-42d2-a3ef-979c10527b88",
+        "middle_name": ""
+    },
+    "4327112c-1a15-4489-b78e-be94e353a065": {
+        "familyname": "Muster",
+        "name": "Peter",
+        "date": "2026-11-02",
+        "start_time": "07:30",
+        "end_time": "16:15",
+        "houers_worked": 8,
+        "minutes_worked": 0,
+        "over_time": 0,
+        "id": "4327112c-1a15-4489-b78e-be94e353a065",
+        "middle_name": ""
     }
 }
