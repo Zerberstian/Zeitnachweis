@@ -24,6 +24,13 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
     start_time = ft.TextField(label="Startzeit (00:00)")
     end_time = ft.TextField(label="Endzeit (00:00)")
 
+    time_entries_column = ft.Column(
+        expand=True,
+        spacing=10,
+        scroll=ft.ScrollMode.AUTO,
+        controls=[],
+    )
+
     def login(_):
         login_data = (
             (family_name.value or "").strip(),
@@ -37,34 +44,48 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
             "Bitte gib einen Vornamen ein." if not login_data[1] else None
         )
         ez_password.error = (
-            "Bitte gib ein Passwort ein"
+            "Bitte gib ein Passwort ein" if not login_data[2] else None
         )
+
+        if any((family_name.error, first_name.error, ez_password.error)):
+            page.update()
+            return
+
+        def safe_filename_part(value):
+            return re.sub(r"[^\w-]", "_", value, flags=re.UNICODE).strip("_")
+
+        filename = (
+            "_".join(safe_filename_part(part) for part in login_data[:2]) + ".json"
+        )
+        json_path = Path("Json") / filename
+
+        try:
+            with open(json_path, "r", encoding="utf-8") as f:
+                raw_json_data = json.load(f)
+        except (OSError, json.JSONDecodeError) as error:
+            ez_password.error = f"Nutzerdatei konnte nicht geladen werden: {error}"
+            page.update()
+            return
+
+        formatted_json_data = [
+            ft.Text(
+                f"ID: {eintrag.get('id', eintrag_id)}  \n"
+                f"Datum: {eintrag.get('date', '')}  \n"
+                f"Start: {eintrag.get('start_time', '')}  \n"
+                f"Ende: {eintrag.get('end_time', '')}  \n"
+                f"Arbeitszeit: {eintrag.get('houers_worked', 0)} Std. \n"
+                f"{eintrag.get('minutes_worked', 0)} Min.\n",
+                size=16,
+            )
+            for eintrag_id, eintrag in raw_json_data.items()
+        ]
+        time_entries_column.controls = formatted_json_data
 
         login_frame.visible = False
         Content_Parent_Frame.visible = True
-        page.update()
         
-        '''
 
-        # dass hier bei Content Frame 2 oder so
-
-        def safe_filename_part(value):
-            return re.sub(r"[^\w-]", "_", str(value), flags=re.UNICODE).strip("_")
-
-        filename_parts = [login_data[0]]
-        filename_parts.append(login_data[1])
-        filename = "_".join(safe_filename_part(part) for part in filename_parts) + ".json"
-        json_path = Path("Json") / filename
-
-        
-        with open(json_path, 'r') as f:
-            d = json.load(f)
-
-        
-        '''
-        
     def submit(_):
-        # strip inputs from gotten Values
         input_values = (
             (family_name.value or "").strip(),
             (middle_name.value or "").strip(),
@@ -125,7 +146,6 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
                             alignment=ft.MainAxisAlignment.CENTER,
                             controls=[
                                 ft.Button(
-                                    #expand=True,
                                     content="   Anmelden   ",
                                     on_click=login, 
                                 ),
@@ -164,7 +184,6 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
                                 spacing=10,
                                 controls=[
                                     ft.Row(
-                                        #expand=True,
                                         vertical_alignment=ft.CrossAxisAlignment.STRETCH,
                                         controls=[
                                             ft.Column(
@@ -196,9 +215,6 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
                 ),
             )
 
-
-
-    # Die vier "Frames" für die rechte Seite
     EntryCreationFrame = ft.Container(
         expand=True,
         padding=20,
@@ -227,42 +243,22 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
             ],
         ),
     )
-    with open("Json/Muster_Peter.json", "r", encoding="utf-8") as f:
-        raw_json_data = json.load(f)
 
-    formated_json_data = [
-        ft.Text(
-            f"ID: {eintrag.get('id', eintrag_id)}  \n"
-            f"Datum: {eintrag.get('date', '')}  \n"
-            f"Start: {eintrag.get('start_time', '')}  \n"
-            f"Ende: {eintrag.get('end_time', '')}  \n"
-            f"Arbeitszeit: {eintrag.get('houers_worked', 0)} Std. \n"
-            f"{eintrag.get('minutes_worked', 0)} Min.\n",
-            size=16,
-        )
-        for eintrag_id, eintrag in raw_json_data.items()
-    ]
 
     TimeEntriesDisplayFrame = ft.Container(
         expand=True,
         padding=20,
         bgcolor=ft.Colors.GREEN_50,
         visible=False,
-        content=ft.Column(
-            expand=True,
-            spacing=10,
-            scroll=ft.ScrollMode.AUTO,
-            controls=formated_json_data,
-        ),
-        
+        content=time_entries_column,
     )
 
 
-    frames = [ EntryCreationFrame, TimeEntriesDisplayFrame]
-    right_frames.controls = frames
+    frame_list = [ EntryCreationFrame, TimeEntriesDisplayFrame]
+    right_frames.controls = frame_list
 
     def show_frame(frame_to_show):
-        for frame in frames:
+        for frame in frame_list:
             frame.visible = frame is frame_to_show
         page.update()
 
@@ -281,7 +277,6 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
         )
     )            
 def start_gui(on_submit: Callable[[SubmittedValues], None]) -> None:
-    # Flet supplies page; bind the application callback required by main().
     ft.run(lambda page: main(page, on_submit))
 
 if __name__ == "__main__":
