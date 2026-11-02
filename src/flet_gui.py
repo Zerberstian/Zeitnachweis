@@ -196,8 +196,7 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
                                 ),
                             ]
                         )
-
-                        
+       
                     ]   
         )
         
