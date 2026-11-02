@@ -164,7 +164,7 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
                                 spacing=10,
                                 controls=[
                                     ft.Row(
-                                        expand=True,
+                                        #expand=True,
                                         vertical_alignment=ft.CrossAxisAlignment.STRETCH,
                                         controls=[
                                             ft.Column(
@@ -173,41 +173,19 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
                                                 controls=[
                                                     ft.Button(
                                                         expand=True,
-                                                        content="Button 1",
-                                                        on_click=lambda e: show_frame(Content_Frame_1),
+                                                        content="Neuer Eintrag",
+                                                        on_click=lambda e: show_frame(EntryCreationFrame),
                                                         
                                                     ),
                                                     ft.Button(
                                                         expand=True,
-                                                        content="Button 2",
-                                                        on_click=lambda e: show_frame(Content_Frame_2)                                            ),
-                                                    ft.Button(
-                                                        expand=True,
-                                                        content="Button 3",
-                                                        on_click=lambda e: show_frame(Content_Frame_3),
-                                                    ),
-                                                    ft.Button(
-                                                        expand=True,
-                                                        content="Button 4",
-                                                        on_click=lambda e: show_frame(Content_Frame_4), 
-                                                    ),
+                                                        content="Übersicht",
+                                                        on_click=lambda e: show_frame(TimeEntriesDisplayFrame)                                                   ),
                                                 ]
                                             )
                                         ],
                                     ),
-                                    ft.Row(
-                                        expand=True
-                                    ),
-                                    ft.Row(
-                                        expand=True,
-                                        controls=[
-                                            ft.Button(
-                                                expand=False,
-                                                content="Settings",
-                                                on_click=lambda e: show_frame(Content_Frame_4), 
-                                            ),
-                                        ],
-                                    ),
+
                                 ],
                             ),
 
@@ -221,7 +199,7 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
 
 
     # Die vier "Frames" für die rechte Seite
-    Content_Frame_1 = ft.Container(
+    EntryCreationFrame = ft.Container(
         expand=True,
         padding=20,
         bgcolor=ft.Colors.BLUE_50,
@@ -265,7 +243,7 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
         for eintrag_id, eintrag in raw_json_data.items()
     ]
 
-    Content_Frame_2 = ft.Container(
+    TimeEntriesDisplayFrame = ft.Container(
         expand=True,
         padding=20,
         bgcolor=ft.Colors.GREEN_50,
@@ -279,23 +257,8 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
         
     )
 
-    Content_Frame_3 = ft.Container(
-        expand=True,
-        padding=20,
-        bgcolor=ft.Colors.AMBER_50,
-        content=ft.Text("Inhalt von Frame 3"),
-        visible=False,
-    )
 
-    Content_Frame_4 = ft.Container(
-        expand=True,
-        padding=20,
-        bgcolor=ft.Colors.PURPLE_50,
-        content=ft.Text("Inhalt von Frame 4"),
-        visible=False,
-    )
-
-    frames = [ Content_Frame_1, Content_Frame_2, Content_Frame_3, Content_Frame_4]
+    frames = [ EntryCreationFrame, TimeEntriesDisplayFrame]
     right_frames.controls = frames
 
     def show_frame(frame_to_show):
