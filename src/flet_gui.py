@@ -17,6 +17,44 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
     page.window.maximized = True
 
 
+    def build_rows(items: dict[str, dict[str, object]]) -> list[ft.DataRow]:
+        return [
+            ft.DataRow(
+                cells=[
+                    ft.DataCell(ft.Text(str(entry.get("date", entry_id)))),
+                    ft.DataCell(ft.Text(str(entry.get("start_time", "")))),
+                    ft.DataCell(ft.Text(str(entry.get("end_time", "")))),
+                    ft.DataCell(ft.Text(str(entry.get("houers_worked", "")))),
+                    ft.DataCell(ft.Text(str(entry.get("minutes_worked", "")))),
+                    ft.DataCell(ft.Text(str(entry.get("over_time", "")))),
+                ]
+            )
+            for entry_id, entry in items.items()
+        ]
+        
+
+    table = ft.DataTable(
+        expand=True,
+        #width=700,
+        bgcolor=ft.Colors.SURFACE_CONTAINER_LOW,
+        border=ft.Border.all(1, ft.Colors.OUTLINE_VARIANT),
+        border_radius=10, 
+        divider_thickness=1,
+        columns=[
+            ft.DataColumn(
+                label=ft.Text("Datum")
+            ),
+            ft.DataColumn(
+                label=ft.Text("Start")
+            ),
+            ft.DataColumn(label=ft.Text("Ende")),
+            ft.DataColumn(label=ft.Text("Stunden")),
+            ft.DataColumn(label=ft.Text("Minuten")),
+            ft.DataColumn(label=ft.Text("Überstunden")),
+        ],
+        rows=[],
+    )
+
     family_name = ft.TextField(label="Familienname")#, hint_text=login[0])
     middle_name = ft.TextField(label="Zweitname (Optional)")
     first_name = ft.TextField(label="Vorname")#, hint_text=login[1])
@@ -66,20 +104,10 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
             ez_password.error = f"Nutzerdatei konnte nicht geladen werden: {error}"
             page.update()
             return
-
-        formatted_json_data = [
-            ft.Text(
-                f"ID: {eintrag.get('id', eintrag_id)}  \n"
-                f"Datum: {eintrag.get('date', '')}  \n"
-                f"Start: {eintrag.get('start_time', '')}  \n"
-                f"Ende: {eintrag.get('end_time', '')}  \n"
-                f"Arbeitszeit: {eintrag.get('houers_worked', 0)} Std. \n"
-                f"{eintrag.get('minutes_worked', 0)} Min.\n",
-                size=16,
-            )
-            for eintrag_id, eintrag in raw_json_data.items()
-        ]
-        time_entries_column.controls = formatted_json_data
+        
+        table.rows = build_rows(raw_json_data)
+        time_entries_column.controls = [table]
+        time_entries_column.update()
 
         family_name.disabled = True
         middle_name.disabled = True
@@ -87,10 +115,12 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
         family_name.update()
         middle_name.update()
         first_name.update()
-        
+
         login_frame.visible = False
         Content_Parent_Frame.visible = True
         page.update()
+
+        
 
         '''
         returns = (login_data[0], login_data[1])
