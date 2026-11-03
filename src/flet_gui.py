@@ -62,6 +62,18 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
     start_time = ft.TextField(label="Startzeit (00:00)")
     end_time = ft.TextField(label="Endzeit (00:00)")
 
+    def updating_standards():
+        family_name.update()
+        first_name.update()
+        ez_password.update()
+        creation_frame.update()
+
+    def clearing_inputs():
+        family_name = ""
+        first_name = ""
+        ez_password = ""
+        updating_standards()
+
     time_entries_column = ft.Column(
         expand=True,
         spacing=10,
@@ -126,10 +138,10 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
 
         
 
-        '''
-        returns = (login_data[0], login_data[1])
+        
+        returns = (json_path)
         return returns
-        '''
+        
 
     def submit(_):
         input_values = (
@@ -217,8 +229,34 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
 
         page.update()
 
-        '''### Hier dann die JSON erstellung ###'''
+        def create_json_file(path):
+            with path.open("x", encoding="utf-8") as file:
+                json.dump({}, file, indent=4, ensure_ascii=False)
 
+        def safe_filename_part(value):
+            return re.sub(r"[^\w-]", "_", value, flags=re.UNICODE).strip("_")
+
+        filename = "_".join(
+            safe_filename_part(part) for part in (new_acc[0], new_acc[2])
+        ) + ".json"
+        json_path = Path("Json") / filename
+
+        try:
+            json_path.parent.mkdir(parents=True, exist_ok=True)
+            create_json_file(json_path)
+            clearing_inputs()
+
+        except FileExistsError:
+            family_name.error = "Ein Nutzer mit diesem Namen existiert bereits."
+            creation_frame.update()
+            page.update()
+            return
+        except OSError:
+            family_name.error = "Die Nutzerdatei konnte nicht erstellt werden."
+            creation_frame.update()
+            page.update()
+            return
+        
 
     login_frame = ft.Container(
         expand=100,
@@ -245,7 +283,7 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
                                 ),
                             ]
                         )
-       
+        
                     ]   
         )
         
@@ -279,7 +317,7 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
                                 ),
                             ]
                         )
-       
+        
                     ]   
         )
     )
