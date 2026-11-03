@@ -35,7 +35,7 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
 
     table = ft.DataTable(
         expand=True,
-        #width=700,
+        width=900,
         bgcolor=ft.Colors.SURFACE_CONTAINER_LOW,
         border=ft.Border.all(1, ft.Colors.OUTLINE_VARIANT),
         border_radius=10, 
@@ -101,7 +101,10 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
             with open(json_path, "r", encoding="utf-8") as f:
                 raw_json_data = json.load(f)
         except (OSError, json.JSONDecodeError) as error:
-            ez_password.error = f"Nutzerdatei konnte nicht geladen werden: {error}"
+            family_name.error = f"Nachname nicht gefunden"
+            first_name.error = f"Vorname nicht gefunden"
+            ez_password.error = f"Datei nicht vorhanden"
+            print(f"Error-code: {error}")
             page.update()
             return
         
@@ -173,6 +176,41 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
             end_time.error = str(error)
             page.update()
 
+    def back_to_login(_):
+        creation_frame.visible = False
+        login_frame.visible = True
+        page.update()
+
+    def to_cration_frame(_):
+        login_frame.visible = False
+        creation_frame.visible = True
+        page.update()
+
+    def create_acc():
+        new_acc = (
+            (family_name.value or "").strip(),
+            (middle_name.value or "").strip(),
+            (first_name.value or "").strip(), 
+            (ez_password.value or "").strip(),             
+        )
+        family_name.error = (
+            "Bitte gib einen Familiennamen ein." if not new_acc[0] else None
+        )
+        first_name.error = (
+            "Bitte gib einen Vornamen ein." if not new_acc[2] else None
+        )
+        ez_password.error = (
+            "Bitte gib ein Passwort ein" if not new_acc[3] else None
+        )
+        if any((family_name.error, first_name.error, ez_password.error)) and  creation_frame.visible == True:
+            creation_frame.update()
+            return
+
+        page.update()
+
+        '''### Hier dann die JSON erstellung ###'''
+
+
     login_frame = ft.Container(
         expand=100,
         content=ft.Column(
@@ -181,6 +219,7 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
                     horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                     spacing=10, 
                     controls= [
+                        ft.Text("Anmeldung", size=24),
                         family_name,
                         first_name,
                         ez_password,
@@ -193,6 +232,7 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
                                 ),
                                 ft.Button(
                                     content="Nutzer anlegen",
+                                    on_click=to_cration_frame,
                                 ),
                             ]
                         )
@@ -200,6 +240,39 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
                     ]   
         )
         
+    )
+
+
+    creation_frame = ft.Container(   
+        expand=100,
+        visible=False,
+        content=ft.Column(
+                    expand=True,
+                    alignment=ft.MainAxisAlignment.CENTER,
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                    spacing=10, 
+                    controls= [
+                        ft.Text("Nutzererstellung", size=24),
+                        family_name,
+                        middle_name,
+                        first_name,
+                        ez_password,
+                        ft.Row(
+                            alignment=ft.MainAxisAlignment.CENTER,
+                            controls=[
+                                ft.Button(
+                                    content="   Zurück   ",
+                                    on_click=back_to_login, 
+                                ),
+                                ft.Button(
+                                    content="   anlegen   ",
+                                    on_click=create_acc
+                                ),
+                            ]
+                        )
+       
+                    ]   
+        )
     )
 
     right_frames = ft.Row(
@@ -312,6 +385,7 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
                 spacing=20,
                 controls=[
                     login_frame,
+                    creation_frame,
                     Content_Parent_Frame,
                 ]
             )
