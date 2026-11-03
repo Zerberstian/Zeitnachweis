@@ -85,7 +85,8 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
             "Bitte gib ein Passwort ein" if not login_data[2] else None
         )
 
-        if any((family_name.error, first_name.error, ez_password.error)):
+        if any((family_name.error, first_name.error, ez_password.error)):# and creation_frame.visible == False:
+            login_frame.update()
             page.update()
             return
 
@@ -179,11 +180,18 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
     def back_to_login(_):
         creation_frame.visible = False
         login_frame.visible = True
+        family_name.error = None
+        first_name.error = None
+        ez_password.error = None
+
         page.update()
 
     def to_cration_frame(_):
         login_frame.visible = False
         creation_frame.visible = True
+        family_name.error = None
+        first_name.error = None
+        ez_password.error = None
         page.update()
 
     def create_acc():
@@ -202,8 +210,9 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
         ez_password.error = (
             "Bitte gib ein Passwort ein" if not new_acc[3] else None
         )
-        if any((family_name.error, first_name.error, ez_password.error)) and  creation_frame.visible == True:
+        if any((family_name.error, first_name.error, ez_password.error)):# and  login_frame.visible == False:
             creation_frame.update()
+            page.update()
             return
 
         page.update()
