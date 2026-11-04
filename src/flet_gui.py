@@ -55,24 +55,20 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
         rows=[],
     )
 
-    family_name = ft.TextField(label="Familienname")#, hint_text=login[0])
-    middle_name = ft.TextField(label="Zweitname (Optional)")
-    first_name = ft.TextField(label="Vorname")#, hint_text=login[1])
-    ez_password = ft.TextField(label="Passwort (123)")
+    login_family_name = ft.TextField(label="Familienname")
+    login_first_name = ft.TextField(label="Vorname")
+    login_password = ft.TextField(label="Passwort (123)")
+
+    account_family_name = ft.TextField(label="Familienname")
+    account_middle_name = ft.TextField(label="Zweitname (Optional)")
+    account_first_name = ft.TextField(label="Vorname")
+    account_password = ft.TextField(label="Passwort (123)")
+
+    entry_family_name = ft.TextField(label="Familienname")
+    entry_middle_name = ft.TextField(label="Zweitname (Optional)")
+    entry_first_name = ft.TextField(label="Vorname")
     start_time = ft.TextField(label="Startzeit (00:00)")
     end_time = ft.TextField(label="Endzeit (00:00)")
-
-    def updating_standards():
-        family_name.update()
-        first_name.update()
-        ez_password.update()
-        creation_frame.update()
-
-    def clearing_inputs():
-        family_name = ""
-        first_name = ""
-        ez_password = ""
-        updating_standards()
 
     time_entries_column = ft.Column(
         expand=True,
@@ -83,21 +79,21 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
 
     def login(_):
         login_data = (
-            (family_name.value or "").strip(),
-            (first_name.value or "").strip(),
-            (ez_password.value or "").strip(),
+            (login_family_name.value or "").strip(),
+            (login_first_name.value or "").strip(),
+            (login_password.value or "").strip(),
         )
-        family_name.error = (
+        login_family_name.error = (
             "Bitte gib einen Familiennamen ein." if not login_data[0] else None
         )
-        first_name.error = (
+        login_first_name.error = (
             "Bitte gib einen Vornamen ein." if not login_data[1] else None
         )
-        ez_password.error = (
+        login_password.error = (
             "Bitte gib ein Passwort ein" if not login_data[2] else None
         )
 
-        if any((family_name.error, first_name.error, ez_password.error)):# and creation_frame.visible == False:
+        if any((login_family_name.error, login_first_name.error, login_password.error)):
             login_frame.update()
             page.update()
             return
@@ -114,9 +110,9 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
             with open(json_path, "r", encoding="utf-8") as f:
                 raw_json_data = json.load(f)
         except (OSError, json.JSONDecodeError) as error:
-            family_name.error = f"Nachname nicht gefunden"
-            first_name.error = f"Vorname nicht gefunden"
-            ez_password.error = f"Datei nicht vorhanden"
+            login_family_name.error = "Nachname nicht gefunden"
+            login_first_name.error = "Vorname nicht gefunden"
+            login_password.error = "Datei nicht vorhanden"
             print(f"Error-code: {error}")
             page.update()
             return
@@ -125,12 +121,11 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
         time_entries_column.controls = [table]
         time_entries_column.update()
 
-        family_name.disabled = True
-        middle_name.disabled = True
-        first_name.disabled = True
-        family_name.update()
-        middle_name.update()
-        first_name.update()
+        entry_family_name.value = login_data[0]
+        entry_first_name.value = login_data[1]
+        entry_family_name.disabled = True
+        entry_middle_name.disabled = True
+        entry_first_name.disabled = True
 
         login_frame.visible = False
         Content_Parent_Frame.visible = True
@@ -145,17 +140,17 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
 
     def submit(_):
         input_values = (
-            (family_name.value or "").strip(),
-            (middle_name.value or "").strip(),
-            (first_name.value or "").strip(),
+            (entry_family_name.value or "").strip(),
+            (entry_middle_name.value or "").strip(),
+            (entry_first_name.value or "").strip(),
             (start_time.value or "").strip(),
             (end_time.value or "").strip(),
         )
 
-        family_name.error = (
+        entry_family_name.error = (
             "Bitte gib einen Familiennamen ein." if not input_values[0] else None
         )
-        first_name.error = (
+        entry_first_name.error = (
             "Bitte gib einen Vornamen ein." if not input_values[2] else None
         )
         start_time.error = (
@@ -177,7 +172,7 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
             )
         )
 
-        if any((family_name.error, first_name.error, start_time.error, end_time.error)):
+        if any((entry_family_name.error, entry_first_name.error, start_time.error, end_time.error)):
             page.update()
             return
 
@@ -192,37 +187,43 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
     def back_to_login(_):
         creation_frame.visible = False
         login_frame.visible = True
-        family_name.error = None
-        first_name.error = None
-        ez_password.error = None
+        account_family_name.error = None
+        account_first_name.error = None
+        account_password.error = None
+        login_family_name.error = None
+        login_first_name.error = None
+        login_password.error = None
 
         page.update()
 
     def to_cration_frame(_):
         login_frame.visible = False
         creation_frame.visible = True
-        family_name.error = None
-        first_name.error = None
-        ez_password.error = None
+        account_family_name.error = None
+        account_first_name.error = None
+        account_password.error = None
+        login_family_name.error = None
+        login_first_name.error = None
+        login_password.error = None
         page.update()
 
-    def create_acc():
+    def create_acc(_):
         new_acc = (
-            (family_name.value or "").strip(),
-            (middle_name.value or "").strip(),
-            (first_name.value or "").strip(), 
-            (ez_password.value or "").strip(),             
+            (account_family_name.value or "").strip(),
+            (account_middle_name.value or "").strip(),
+            (account_first_name.value or "").strip(),
+            (account_password.value or "").strip(),
         )
-        family_name.error = (
+        account_family_name.error = (
             "Bitte gib einen Familiennamen ein." if not new_acc[0] else None
         )
-        first_name.error = (
+        account_first_name.error = (
             "Bitte gib einen Vornamen ein." if not new_acc[2] else None
         )
-        ez_password.error = (
+        account_password.error = (
             "Bitte gib ein Passwort ein" if not new_acc[3] else None
         )
-        if any((family_name.error, first_name.error, ez_password.error)):# and  login_frame.visible == False:
+        if any((account_family_name.error, account_first_name.error, account_password.error)):
             creation_frame.update()
             page.update()
             return
@@ -244,19 +245,28 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
         try:
             json_path.parent.mkdir(parents=True, exist_ok=True)
             create_json_file(json_path)
-            clearing_inputs()
+
 
         except FileExistsError:
-            family_name.error = "Ein Nutzer mit diesem Namen existiert bereits."
+            account_family_name.error = "Ein Nutzer mit diesem Namen existiert bereits."
             creation_frame.update()
             page.update()
             return
         except OSError:
-            family_name.error = "Die Nutzerdatei konnte nicht erstellt werden."
+            account_family_name.error = "Die Nutzerdatei konnte nicht erstellt werden."
             creation_frame.update()
             page.update()
             return
         
+        account_family_name.error = None
+        account_middle_name.error = None
+        account_first_name.error = None
+        account_password.error = None
+        account_family_name.value = ""
+        account_middle_name.value = ""
+        account_first_name.value = ""
+        account_password.value = ""
+        page.update()
 
     login_frame = ft.Container(
         expand=100,
@@ -267,9 +277,9 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
                     spacing=10, 
                     controls= [
                         ft.Text("Anmeldung", size=24),
-                        family_name,
-                        first_name,
-                        ez_password,
+                        login_family_name,
+                        login_first_name,
+                        login_password,
                         ft.Row(
                             alignment=ft.MainAxisAlignment.CENTER,
                             controls=[
@@ -300,10 +310,10 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
                     spacing=10, 
                     controls= [
                         ft.Text("Nutzererstellung", size=24),
-                        family_name,
-                        middle_name,
-                        first_name,
-                        ez_password,
+                        account_family_name,
+                        account_middle_name,
+                        account_first_name,
+                        account_password,
                         ft.Row(
                             alignment=ft.MainAxisAlignment.CENTER,
                             controls=[
@@ -388,9 +398,9 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
                     expand=True,
                     spacing=10,
                     controls=[
-                        family_name,
-                        middle_name,
-                        first_name,
+                        entry_family_name,
+                        entry_middle_name,
+                        entry_first_name,
                         start_time,
                         end_time,
                         ft.Button(content="Einreichen", on_click=submit),
