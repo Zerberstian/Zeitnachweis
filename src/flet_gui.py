@@ -304,7 +304,7 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
                     alignment=ft.MainAxisAlignment.CENTER,
                     horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                     spacing=10, 
-                    controls= [
+                    controls=[
                         ft.Text("Nutzererstellung", size=24),
                         account_family_name,
                         account_middle_name,
