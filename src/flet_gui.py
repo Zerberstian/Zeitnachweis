@@ -258,10 +258,6 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
             page.update()
             return
         
-        account_family_name.error = None
-        account_middle_name.error = None
-        account_first_name.error = None
-        account_password.error = None
         account_family_name.value = ""
         account_middle_name.value = ""
         account_first_name.value = ""
