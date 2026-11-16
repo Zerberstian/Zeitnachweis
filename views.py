@@ -267,7 +267,7 @@ def main(page: ft.Page):
                                             entry_first_name,
                                             start_time,
                                             end_time,
-                                            ft.Button(content="Einreichen", on_click=print("knecht")),
+                                            ft.Button(content="Einreichen", on_click=lambda: print("knecht")),
                                         ],
                                     ),
                                     ft.Column(
