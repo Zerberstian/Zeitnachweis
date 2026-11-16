@@ -366,7 +366,8 @@ def main(page: ft.Page, on_submit: Callable[[SubmittedValues], None]):
                                                     ft.Button(
                                                         expand=True,
                                                         content="Übersicht",
-                                                        on_click=lambda e: show_frame(TimeEntriesDisplayFrame)                                                   ),
+                                                        on_click=lambda e: show_frame(TimeEntriesDisplayFrame)                                                   
+                                                    ),
                                                 ]
                                             )
                                         ],
