@@ -15,11 +15,11 @@ def main(page: ft.Page):
 
     # async macht den Handler asynchron; await wartet auf den Routenwechsel,
     # ohne dabei den UI-Ereignisablauf waehrenddessen zu blockieren.
-    async def open_mail_settings(e):
-        await page.push_route("/bums")
+    async def to_sign_up(e):
+        await page.push_route("/sign_up")
 
-    async def open_settings(e):
-        await page.push_route("/dings")
+    async def sign_in(e):
+        await page.push_route("/signed_in")
 
     async def entry_dings(e):
         await page.push_route("/dings/entry_dings")
@@ -157,11 +157,11 @@ def main(page: ft.Page):
                                                         controls=[
                                                             ft.Button(
                                                                 content="   Anmelden   ",
-                                                                on_click=open_settings, 
+                                                                on_click=sign_in, 
                                                             ),
                                                             ft.Button(
                                                                 content="Nutzer anlegen",
-                                                                on_click=open_mail_settings,
+                                                                on_click=to_sign_up,
                                                             ),
                                                         ]
                                                     )
@@ -183,10 +183,10 @@ def main(page: ft.Page):
             controls=[],
         )
         # Unterseiten behalten /dings als vorherige View im Navigations-Stack.
-        if page.route == "/dings" or page.route.startswith("/dings/"):
+        if page.route == "/signed_in" or page.route.startswith("/signed_in/"):
             page.views.append(
                 ft.View(
-                    route="/dings",
+                    route="/signed_in",
                     controls=[
                         ft.SafeArea(
                             content=ft.Column(
@@ -344,16 +344,16 @@ def main(page: ft.Page):
         frame_list = [TimeEntriesDisplayFrame]
         right_frames.controls = frame_list
         # Die Mail-Seite wird nur fuer genau diese tiefere Route hinzugefuegt.
-        if page.route == "/bums":
+        if page.route == "/sign_up":
             page.views.append(
                 ft.View(
-                    route="/bums",
+                    route="/sign_up",
                     controls=[
                         ft.SafeArea(
                             content=ft.Column(
                                 controls=[
                                     ft.AppBar(
-                                        title=ft.Text("Registrierungs Bums"),
+                                        title=ft.Text("sign up"),
                                         bgcolor=ft.Colors.SURFACE_CONTAINER_HIGHEST,
                                     ),
                                     #ft.Text("Mail settings!"),
@@ -369,13 +369,14 @@ def main(page: ft.Page):
     # Wird aufgerufen, wenn der Nutzer eine View per Zurueck-Navigation schliesst.
     async def view_pop(e):
         if e.view is not None:
-            #print("View pop:", e.view)
+            print("View pop:", e.view)
             #page.views.remove(e.view)
+
+            '''# wichtig #'''
             page.views.pop()
             # Nach dem Entfernen zeigt die oberste uebrige View die Zielroute.
             top_view = page.views[-1]
             await page.push_route(top_view.route)
-            #await page.pop_views_until("/dings", result="Done!")
 
     # Flet ruft diese Handler bei Routenwechsel bzw. Zurueck-Navigation auf.
     page.on_route_change = route_change
