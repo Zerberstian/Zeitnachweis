@@ -371,10 +371,11 @@ def main(page: ft.Page):
         if e.view is not None:
             #print("View pop:", e.view)
             #page.views.remove(e.view)
+            page.views.pop()
             # Nach dem Entfernen zeigt die oberste uebrige View die Zielroute.
-            top_view = page.views[0]
-            #await page.push_route(top_view.route)
-            await page.pop_views_until("/dings", result="Done!")
+            top_view = page.views[-1]
+            await page.push_route(top_view.route)
+            #await page.pop_views_until("/dings", result="Done!")
 
     # Flet ruft diese Handler bei Routenwechsel bzw. Zurueck-Navigation auf.
     page.on_route_change = route_change
