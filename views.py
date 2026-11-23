@@ -22,10 +22,10 @@ def main(page: ft.Page):
         await page.push_route("/signed_in")
 
     async def entry_dings(e):
-        await page.push_route("/dings/entry_dings")
+        await page.push_route("/signed_in/entry_dings")
 
     async def anzeige_dings(e):
-        await page.push_route("/dings/anzeige_dings")
+        await page.push_route("/signed_in/anzeige_dings")
 
     async def to_root(e):
         await page.push_route("/")
