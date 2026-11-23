@@ -246,10 +246,10 @@ def main(page: ft.Page):
                 )
             )
 
-        if page.route == "/dings/entry_dings":
+        if page.route == "/signed_in/entry_dings":
             page.views.append(
                 ft.View(
-                    route="/dings/entry_dings",
+                    route="/signed_in/entry_dings",
                     controls=[
                         ft.SafeArea(
                             content=ft.Column(
@@ -282,10 +282,10 @@ def main(page: ft.Page):
                 )
             )
 
-        if page.route == "/dings/anzeige_dings":
+        if page.route == "/signed_in/anzeige_dings":
             page.views.append(
                 ft.View(
-                    route="/dings/anzeige_dings",
+                    route="/signed_in/anzeige_dings",
                     controls=[
                         ft.SafeArea(
                             content=ft.Column(
